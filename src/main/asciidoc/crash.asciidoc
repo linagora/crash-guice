@@ -1,0 +1,172 @@
+CRaSH Guice Module
+==================
+:Author:    Matthieu Baechler
+:Email:     <matthieu.baechler@linagora.com>
+:stylesdir: styles
+:stylesheet: embedded-light.css
+
+= What is CRaSH =
+
+CRaSH is a great piece of software that brings the power of the command line to any application running on the JVM.
+It allows you to browse internals of your application without a debuger or logs.
+See the http://www.crashub.org[official website] for more information.
+
+= What is Guice =
+
+http://code.google.com/p/google-guice[Guice] is a google library that brings *strong typing* to the *dependency injection* world.
+It helps a lot when you build modular applications.
+
+= What does this project brings =
+
+This project makes it easy to embed the CRaSH shell into any Guice application.
+
+== Quick Start ==
+
+1. Put the following snippet into your Maven pom.xml :
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[source,xml]
+----
+<dependency>
+  <groupId>com.linagora</groupId>
+  <artifactId>crsh.shell.embed.guice</artifactId>
+  <version>0.1-SNAPSHOT</version>
+</dependency>
+----
+
+2. Install the +CrashGuiceSupport+ module into your +GuiceApplication+
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+[source,java]
+----
+public class SampleApplication extends AbstractModule {
+
+	@Override
+	protected void configure() {
+		install(new CrashGuiceSupport()); //import crash in my app
+		... bind some objects ...
+	}
+}
+----
+
+3. Choose how you want to connect to the shell
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You must include the right dependency in your Maven pom.xml, it will be autodetected by crash.
+
+.SSH access plugin
+[source,xml]
+----
+<dependency>
+  <groupId>org.crsh</groupId>
+  <artifactId>crsh.shell.ssh</artifactId>
+  <version>1.2.0-cr9</version>
+</dependency>
+----
+
+4. Choose an authentication method
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You have to provide a +CrashGuiceConfiguration+ that sets the +SSHPlugin.AUTH+ property.
+
+.Hardcoded authentication with a provider method
+[source,java]
+----
+public class SampleApplication extends AbstractModule {
+
+	@Override
+	protected void configure() {
+		install(new CrashGuiceSupport()); //import crash in my app
+		//... bind some objects ...
+	}
+	
+	@Provides
+	public CrashGuiceConfiguration crashConfiguration() {
+		return CrashGuiceConfiguration.builder()
+				.property(SSHPlugin.AUTH.getName(), "simple")
+				.property(SimpleAuthenticationPlugin.SIMPLE_USERNAME, "admin")
+				.property(SimpleAuthenticationPlugin.SIMPLE_PASSWORD, "password")
+				.build();
+	}
+}
+----
+
+5. Run it
+^^^^^^^^^
+
+Once the previous steps are done, it's time to launch your application and to connect to it.
+
+== Features ==
+
+=== Plugin injection ===
+
+Injection works in lot of cases : 
+. you can inject a plugin you wrote into Crash without having to use the ServiceLoader
+. you can inject running plugins into your code to interact with
+. all your Guice managed singleton are available into CRaSH context to build crash command with
+
+==== Declare a new Plugin ====
+
+To declare a +CRaSHPlugin+ you just have to add it to guice +Multibinder+. It will automatically be imported into CRaSH at plugin discovery time.
+
+.Declare a new +CRaSHPlugin+
+[source,java]
+----
+ Multibinder<CRaSHPlugin<?>> pluginBinder = Multibinder.newSetBinder(binder(), new TypeLiteral<CRaSHPlugin<?>>(){});
+ pluginBinder.addBinding().to(ObmSyncAuthenticationPlugin.class);
+----
+
+==== Inject a CRaSHPlugin into your code ====
+
+You can retrieve a CRaSHPlugin into your Guice managed object for whatever reason. You only need to +@Inject+ it.
+
+.Injecting TelnetPlugin into a servlet
+[source,java]
+----
+@Singleton
+public class SampleServlet extends HttpServlet {
+
+	@Inject TelnetPlugin plugin;
+
+	// ...
+}
+----
+
+==== Use guice managed singleton in commands ====
+
+Singletons are put into +context.attributes.beans+ and is usable by your crash commands.
+
+.Example of some crash commands groovy
+----
+@Usage("Perform action on Guice singletons")
+class guice extends CRaSHCommand {
+  @Usage("display a Guice Singleton property")
+  @Command
+  Object print(@Usage("The full class name") @Required @Argument String type, @Usage("The property") @Option(names=["p", "property"]) String property) {
+    def singleton = context.attributes.beans[type];
+    if (singleton != null) {
+    	if (property != null) {
+    		return singleton[property];
+    	} else {
+    		return singleton;
+    	} 
+    }
+    return "No such type : " + type;
+  }
+}
+----
+
+=== Crash guice commands ===
+
+All standards commands usually shipped with CRaSH are available in CRaSH Guice Module.
+Some guice specific commands are provided to make it possible to interact with guice managed objects.
+
++display+
+
+It allows you to display any member of a guice singleton by calling toString on it.
+
++invoke+
+
+It allows to call argument-less methods on guice singleton and display the result by calling toString on it.
+
+

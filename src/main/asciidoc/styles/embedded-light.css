@@ -1,0 +1,379 @@
+/* ---------------------------------------------------------------------------
+   Asciidoctor Stylesheet
+   by Dan Allen
+
+   Derived from AsciiDoc Bare Styles
+   Ryan Tomayko <r@tomayko.com>
+--------------------------------------------------------------------------- */
+
+body {
+  /*font-family: Verdana, Helvetica, Arial, sans-serif;*/
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 85%;
+  line-height: 1.6;
+  margin: 30px 50px;
+  max-width: 65em;
+  color: #222;
+}
+
+a {
+  color: #2455c3;
+}
+
+em {
+  font-style: italic;
+}
+
+strong {
+  font-weight: bold;
+  color: #000;
+}
+
+tt {
+  font-family: Consolas, 'Lucida Console', 'Bitstream Vera Sans Mono', 'Courier New', monospace;
+  color: #000;
+  background-color: #eee;
+  padding: 1px 2px;
+  -webkit-border-radius: 3px;
+}
+
+p, ul, ol, dl {
+  margin: 10px 0;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 15px;
+}
+
+dl {
+  margin-left: 40px;
+}
+
+dt {
+  /*font-weight: normal;
+  color: #000;*/
+  font-weight: bold;
+}
+
+h1, h2, h3, h4, h5 {
+  font-family: 'Lucida Grande', Georgia, Verdana, Helvetica, Arial, sans-serif;
+  font-weight: normal;
+  color: #000;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 1.2;
+  margin: 20px 0;
+}
+
+h2 {
+  font-size: 23px;
+  line-height: 1.36363636; /* repeating, of course */
+  margin: 20px 0;
+  margin: 20px 0 15px 0;
+  color: #ba3925;
+}
+
+h2 + .sectionbody {}
+
+h3 {
+  font-size: 18px;
+  line-height: 1.1;
+  margin: 30px 0 10px 0;
+}
+
+h4 {
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 1.538;
+}
+
+h5 {
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.538;
+}
+
+pre {
+  font-size: larger;
+}
+
+#header { 
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+#header h1 {
+  margin-bottom: 5px;
+}
+
+.title {
+  font-weight: bold;
+  color: #888;
+  color: #222;
+  margin-bottom: 0;
+  padding: 5px 0;
+/*  text-transform: uppercase;*/
+}
+
+.paragraph > .title {
+  text-transform: uppercase;
+}
+
+.lead p, .admonitionblock.lead td.content {
+  font-size: 1.5em;
+  line-height: 1.6em;
+}
+
+.admonitionblock.lead td.icon {
+  vertical-align: middle;
+}
+
+.paragraph .title + p {
+  margin-top: 0;
+}
+
+.admonitionblock .title {
+  font-weight: bold;
+}
+
+.admonitionblock {
+  margin: 30px 0px;
+  color: #555;
+}
+
+.admonitionblock td.icon {
+  width: 30px;
+  padding-right: 20px;
+  padding-left: 20px;
+  padding-top: 0;
+  text-transform: uppercase;
+  font-weight: bold;
+  vertical-align: top;
+  border-right: 4px solid #ddd;
+}
+
+.admonitionblock td.icon .title {
+  color: #000;
+  padding: 4px 0;
+}
+
+.admonitionblock td.content {
+  padding-left: 15px;
+}
+
+.listingblock {
+  margin-bottom: 20px;
+}
+
+.listingblock .title {
+  /*text-transform: none;*/
+}
+
+.listingblock .content {
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+  background: #f7f7f9;
+  padding: 10px;
+}
+
+.listingblock .content pre {
+  margin: 0;
+}
+
+.listingblock .content pre code {
+  background-color: inherit;
+  padding: 2px;
+}
+
+.literalblock .content {
+  margin-left: 40px;
+}
+
+.verseblock .content {
+  white-space: pre;
+}
+
+.sidebarblock {
+  margin-bottom: 20px;
+}
+
+.sidebarblock > .content {
+  border: 1px solid #e3e3e3;
+  -webkit-border-radius: 4px;
+  background: #fcf8e3;
+  padding: 0 10px;
+  color: #222;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.sidebarblock .title {
+  margin: 8px 0;
+  font-weight: bold;
+  color: #222;
+}
+
+.quoteblock {
+  margin: 20px 0;
+  border-left: 1px dotted #bfbfbf;
+}
+
+blockquote {
+  font-style: italic;
+  color: #6f6f6f;
+  font-size: 1.4em;
+  margin: 0;
+  padding: 0 20px;
+}
+
+.quoteblock .attribution {
+  font-style: italic;
+  color: #555;
+  padding: 0 20px;
+  margin-top: -10px;
+}
+
+.quoteblock cite {
+  color: #222;
+}
+
+.exampleblock .content *:first-child {
+  margin-top: 0;
+}
+.exampleblock .content {
+  border-left: 2px solid silver;
+  padding-left: 8px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid #eeeeee;
+  border-bottom: 1px solid #ffffff;
+}
+
+#footer {
+  font-size: 11px;
+  margin-top: 40px;
+  border-top: 1px solid silver;
+  border-top: 1px solid #eeeeee;
+  color: #555;
+}
+
+#author {
+  color: #6f6f6f;
+  /*text-transform: uppercase;*/
+}
+
+#toc {
+  text-align: left;
+  margin-top: 10px;
+}
+
+#toctitle {
+  font-weight: bold;
+  color: #222;
+  font-size: 1.1em;
+}
+
+#toc ol ol {
+  margin: 0;
+}
+
+table.tableblock {
+  margin-bottom: 20px;
+}
+
+table.tableblock > caption {
+  text-align: left;
+  font-weight: bold;
+  padding: 4px 0;
+}
+
+table.tableblock {
+  border-spacing: 0;
+  border-collapse: separate;
+  -webkit-border-radius: 4px;
+}
+
+table.tableblock.frame-all {
+  border: 1px solid #ddd;
+  border-right: 0;
+}
+
+table.tableblock.frame-topbot {
+  border-style: solid;
+  border-color: #468847 #ddd;
+  border-width: 3px 0px;
+}
+
+table.tableblock.grid-all,
+table.tableblock.grid-cols {
+  border-left-width: 1px;
+}
+
+table.tableblock.frame-all.grid-rows,
+table.tableblock.frame-all.grid-all {
+  border-bottom: 0
+}
+
+table.tableblock.frame-all.grid-rows {
+  border-right: 1px solid #ddd;
+}
+
+table.tableblock th.tableblock,
+table.tableblock td.tableblock {
+  padding: 8px; 
+  text-align: left;
+}
+
+table.tableblock td.tableblock {
+  vertical-align: top;
+}
+
+table.tableblock.grid-all th.tableblock,
+table.tableblock.grid-all td.tableblock {
+  border: 0 solid #ddd;
+  border-right-width: 1px;
+  border-bottom-width: 1px;
+}
+
+table.tableblock.grid-cols th.tableblock,
+table.tableblock.grid-cols td.tableblock {
+  border: 0 solid #ddd;
+  border-right-width: 1px;
+}
+
+table.tableblock.grid-rows th.tableblock,
+table.tableblock.grid-rows td.tableblock {
+  border: 0 solid #ddd;
+  border-bottom-width: 1px;
+}
+
+table.tableblock > thead {
+  background-color: whiteSmoke;
+}
+
+table.tableblock > tbody > tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+table.tableblock tbody td.tableblock {
+  color: #333;
+}
+
+span.footnote {
+  vertical-align: super;
+  font-size: smaller;
+}
+
+.green {
+  color: #fff;
+  background-color: #468847;
+  background-color: #5FBF5F;
+  font-weight: bold;
+  padding: 0 3px 1px 3px;
+  border: 1px inset #fff;
+}

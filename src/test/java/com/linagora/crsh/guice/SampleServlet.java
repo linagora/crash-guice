@@ -1,4 +1,4 @@
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import java.io.IOException;
 

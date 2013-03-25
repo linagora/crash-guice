@@ -1,11 +1,14 @@
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import java.util.Random;
+
 
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
+import com.linagora.crsh.guice.CrashGuiceConfiguration;
+import com.linagora.crsh.guice.CrashGuiceSupport;
 
 public class GuiceApplication extends ServletModule {
 	

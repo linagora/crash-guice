@@ -1,4 +1,4 @@
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import java.io.IOException;
 import java.net.URL;
@@ -10,6 +10,8 @@ import org.jboss.arquillian.container.test.api.RunAsClient;
 import org.jboss.arquillian.junit.Arquillian;
 import org.jboss.arquillian.test.api.ArquillianResource;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
+import org.jboss.shrinkwrap.resolver.api.CoordinateParseException;
+import org.jboss.shrinkwrap.resolver.api.ResolutionException;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,7 +35,7 @@ public class ArquillianServletTestCase {
 
 	
 	@Deployment
-	public static WebArchive createDeployment() {
+	public static WebArchive createDeployment() throws IllegalArgumentException, IllegalStateException, ResolutionException, CoordinateParseException, IOException {
 		return GuiceTestWebAppArchive.buildInstance();
 	}
 }

@@ -29,7 +29,7 @@
  * OBM connectors. 
  * 
  * ***** END LICENSE BLOCK ***** */
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import java.util.Set;
 

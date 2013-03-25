@@ -246,14 +246,26 @@
 				<version>2.6</version>
 				<executions>
 					<execution>
+						<id>default-resources</id>
+						<phase>process-resources</phase>
+						<goals>
+							<goal>resources</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-testResources</id>
+						<phase>process-test-resources</phase>
+						<goals>
+							<goal>testResources</goal>
+						</goals>
+					</execution>
+					<execution>
 						<id>copy-html-resources</id>
 						<phase>generate-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
-					</execution>
-				</executions>
-				<configuration>
+							<configuration>
 					<outputDirectory>target/generated-docs</outputDirectory>
 					<resources>
 						<resource>
@@ -261,6 +273,9 @@
 						</resource>
 					</resources>
 				</configuration>
+					</execution>
+				</executions>
+				
 			</plugin>
 		</plugins>
 	</build>

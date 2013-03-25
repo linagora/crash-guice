@@ -1,4 +1,4 @@
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;

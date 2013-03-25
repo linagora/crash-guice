@@ -1,4 +1,4 @@
-package org.crsh.guice;
+package com.linagora.crsh.guice;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -62,6 +62,7 @@ public class CrashGuiceSupport extends AbstractModule {
 		protected FS createCommandFS() throws IOException, URISyntaxException {
 			FS cmdFS = new FS();
 			cmdFS.mount(loader, Path.get("/crash/commands/"));
+			cmdFS.mount(loader, Path.get("/crash/commands/guice/"));
 			return cmdFS;
 		}
 

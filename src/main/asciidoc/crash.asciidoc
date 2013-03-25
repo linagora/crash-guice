@@ -84,8 +84,8 @@ public class SampleApplication extends AbstractModule {
 	public CrashGuiceConfiguration crashConfiguration() {
 		return CrashGuiceConfiguration.builder()
 				.property(SSHPlugin.AUTH.getName(), "simple")
-				.property(SimpleAuthenticationPlugin.SIMPLE_USERNAME, "admin")
-				.property(SimpleAuthenticationPlugin.SIMPLE_PASSWORD, "password")
+				.property(SimpleAuthenticationPlugin.SIMPLE_USERNAME.name, "admin")
+				.property(SimpleAuthenticationPlugin.SIMPLE_PASSWORD.name, "password")
 				.build();
 	}
 }

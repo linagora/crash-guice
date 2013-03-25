@@ -36,7 +36,7 @@ public class GuiceTestWebAppArchive {
 				.addClass(SampleService.class)
 				.addClass(SampleServlet.class)
 				.addClass(CrashGuiceSupport.class)
-				.addClass(CrashGuiceSupport.InjectorHolder.class)
+				.addClass(CrashGuiceSupport.Bootstrap.class)
 				.addClass(GuiceServletContextListener.class)
 				.addClass(TelnetPlugin.class)
 				.addAsLibraries(Maven.resolver().addDependencies(

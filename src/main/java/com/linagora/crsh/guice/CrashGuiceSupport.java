@@ -19,24 +19,30 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.TypeLiteral;
 import com.google.inject.multibindings.Multibinder;
+import com.google.inject.name.Named;
+import com.google.inject.name.Names;
 
 public class CrashGuiceSupport extends AbstractModule {
 
-	public static class InjectorHolder extends PluginLifeCycle {
+	private static final String AUTOSTART = "autostart";
+
+	public static class Bootstrap extends PluginLifeCycle {
 
 		private final Injector injector;
 		private ClassLoader loader;
 		private final CrashGuiceConfiguration configuration;
+		private PluginContext context;
 
 		@Inject
-		public InjectorHolder(Injector injector, PluginDiscovery pluginDiscovery, CrashGuiceConfiguration configuration) throws IOException, URISyntaxException {
+		public Bootstrap(Injector injector, PluginDiscovery pluginDiscovery, CrashGuiceConfiguration configuration,
+				@Named(AUTOSTART)Boolean autostart) throws IOException, URISyntaxException {
 			this.injector = injector;
 			this.loader = getClass().getClassLoader();
 			this.configuration = configuration;
 			FS cmdFS = createCommandFS();
 			FS confFS = createConfFS();
 
-			PluginContext context = new PluginContext(
+			context = new PluginContext(
 					pluginDiscovery,
 					buildGuiceMap(),
 					cmdFS,
@@ -47,10 +53,16 @@ public class CrashGuiceSupport extends AbstractModule {
 				context.setProperty(property.getKey(), property.getValue());
 			}
 			
+			if (autostart) {
+				start();
+			}
+		}
+
+		public void start() {
 			context.refresh();
 			start(context);
 		}
-
+		
 		private Map<String, Object> buildGuiceMap() {
 			return ImmutableMap.of(
 					"factory", injector,
@@ -77,13 +89,22 @@ public class CrashGuiceSupport extends AbstractModule {
 		}
 	}
 
-	public CrashGuiceSupport() {
+	private final boolean autostart;
+	
+	public CrashGuiceSupport(boolean autostart) {
+		this.autostart = autostart;
 	}
+
+	public CrashGuiceSupport() {
+		this(true);
+	}
+
 	
 	@Override
 	protected void configure() {
 		install(new CrashPluginsModule());
-		bind(InjectorHolder.class).asEagerSingleton();
+		bind(Boolean.class).annotatedWith(Names.named(AUTOSTART)).toInstance(autostart);
+		bind(Bootstrap.class).asEagerSingleton();
 	}
 
 	private static class CrashPluginsModule extends AbstractModule {

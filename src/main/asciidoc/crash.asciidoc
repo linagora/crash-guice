@@ -101,6 +101,7 @@ Once the previous steps are done, it's time to launch your application and to co
 === Plugin injection ===
 
 Injection works in lot of cases : 
+
 . you can inject a plugin you wrote into Crash without having to use the ServiceLoader
 . you can inject running plugins into your code to interact with
 . all your Guice managed singleton are available into CRaSH context to build crash command with

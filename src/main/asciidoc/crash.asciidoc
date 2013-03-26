@@ -171,3 +171,7 @@ It allows you to display any member of a guice singleton by calling toString on 
 It allows to call argument-less methods on guice singleton and display the result by calling toString on it.
 
 
+= Technical Information =
+
+image::https://buildhive.cloudbees.com/job/linagora/job/crash-guice/com.linagora$crsh.shell.embed.guice/badge/icon[Build Status, link="https://buildhive.cloudbees.com/job/linagora/job/crash-guice/com.linagora$crsh.shell.embed.guice/"]
+

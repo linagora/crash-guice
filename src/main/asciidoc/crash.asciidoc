@@ -30,7 +30,7 @@ This project makes it easy to embed the CRaSH shell into any Guice application.
 <dependency>
   <groupId>com.linagora</groupId>
   <artifactId>crsh.shell.embed.guice</artifactId>
-  <version>0.1</version>
+  <version>0.2-SNAPSHOT</version>
 </dependency>
 ----
 

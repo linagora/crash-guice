@@ -20,9 +20,8 @@
 
 	<licenses>
 		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
+			<name>LGPL, version 2.1</name>
+			<url>http://www.opensource.org/licenses/lgpl-license.php</url>
 		</license>
 	</licenses>
 	<scm>
@@ -299,17 +298,17 @@
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
-							<configuration>
-					<outputDirectory>target/generated-docs</outputDirectory>
-					<resources>
-						<resource>
-							<directory>src/main/asciidoc</directory>
-						</resource>
-					</resources>
-				</configuration>
+						<configuration>
+							<outputDirectory>target/generated-docs</outputDirectory>
+							<resources>
+								<resource>
+									<directory>src/main/asciidoc</directory>
+								</resource>
+							</resources>
+						</configuration>
 					</execution>
 				</executions>
-				
+
 			</plugin>
 		</plugins>
 	</build>

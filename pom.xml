@@ -12,7 +12,7 @@
 	<groupId>com.linagora</groupId>
 	<artifactId>crsh.shell.embed.guice</artifactId>
 	<packaging>jar</packaging>
-	<version>0.2-SNAPSHOT</version>
+	<version>0.2</version>
 
 	<name>CRaSH Guice</name>
 	<description>The CRaSH Guice integration module</description>

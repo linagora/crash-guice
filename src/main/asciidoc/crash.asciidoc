@@ -175,3 +175,4 @@ It allows to call argument-less methods on guice singleton and display the resul
 
 image::https://buildhive.cloudbees.com/job/linagora/job/crash-guice/com.linagora$crsh.shell.embed.guice/badge/icon[Build Status, link="https://buildhive.cloudbees.com/job/linagora/job/crash-guice/com.linagora$crsh.shell.embed.guice/"]
 
+Thanks Github for the your free services

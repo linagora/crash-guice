@@ -5,6 +5,8 @@ CRaSH Guice Module
 :stylesdir: styles
 :stylesheet: embedded-light.css
 
+Thanks Github for free support
+
 = What is CRaSH =
 
 CRaSH is a great piece of software that brings the power of the command line to any application running on the JVM.

@@ -30,7 +30,7 @@ This project makes it easy to embed the CRaSH shell into any Guice application.
 <dependency>
   <groupId>com.linagora</groupId>
   <artifactId>crsh.shell.embed.guice</artifactId>
-  <version>0.2</version>
+  <version>0.3</version>
 </dependency>
 ----
 
@@ -60,7 +60,7 @@ You must include the right dependency in your Maven pom.xml, it will be autodete
 <dependency>
   <groupId>org.crsh</groupId>
   <artifactId>crsh.shell.ssh</artifactId>
-  <version>1.2.0-cr9</version>
+  <version>1.2.7</version>
 </dependency>
 ----
 
@@ -83,7 +83,7 @@ public class SampleApplication extends AbstractModule {
 	@Provides
 	public CrashGuiceConfiguration crashConfiguration() {
 		return CrashGuiceConfiguration.builder()
-				.property(SSHPlugin.AUTH.getName(), "simple")
+				.property(AuthenticationPlugin.AUTH.getName(), "simple")
 				.property(SimpleAuthenticationPlugin.SIMPLE_USERNAME.name, "admin")
 				.property(SimpleAuthenticationPlugin.SIMPLE_PASSWORD.name, "password")
 				.build();

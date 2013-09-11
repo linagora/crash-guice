@@ -45,7 +45,7 @@
 
 	<properties>
 		<guice.version>3.0</guice.version>
-		<crash.version>1.2.0-cr9</crash.version>
+		<crash.version>1.2.7</crash.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 

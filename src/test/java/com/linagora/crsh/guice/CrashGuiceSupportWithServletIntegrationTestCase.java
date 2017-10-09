@@ -51,7 +51,9 @@ public class CrashGuiceSupportWithServletIntegrationTestCase {
 		out.println("guice print -p counter com.linagora.crsh.guice.SampleService");
 		out.flush();
 		String response = TelnetHelper.readUntil("% ", in);
-		assertThat(response).contains("{5=1}");
+		assertThat(response).contains("5");
+		assertThat(response).contains("--");
+		assertThat(response).contains("1");
 	}
 	
 

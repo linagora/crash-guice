@@ -2,8 +2,11 @@ package com.linagora.crsh.guice;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
+import org.crsh.auth.AuthenticationPlugin;
 import org.crsh.plugin.CRaSHPlugin;
 import org.crsh.plugin.PluginContext;
 import org.crsh.plugin.PluginDiscovery;
@@ -13,6 +16,7 @@ import org.crsh.plugin.ServiceLoaderDiscovery;
 import org.crsh.vfs.FS;
 import org.crsh.vfs.Path;
 
+import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.inject.AbstractModule;
 import com.google.inject.Inject;
@@ -49,7 +53,10 @@ public class CrashGuiceSupport extends AbstractModule {
 					confFS,
 					loader);
 
-			for (Map.Entry<PropertyDescriptor<Object>, Object> property: configuration.toEntries()) {
+			for (Entry<PropertyDescriptor<List>, List> property: configuration.listsAsEntries()) {
+				context.setProperty(property.getKey(), property.getValue());
+			}
+			for (Entry<PropertyDescriptor<Integer>, Integer> property: configuration.integersAsEntries()) {
 				context.setProperty(property.getKey(), property.getValue());
 			}
 			
@@ -119,9 +126,21 @@ public class CrashGuiceSupport extends AbstractModule {
 			Iterable<CRaSHPlugin<?>> plugins = discovery.getPlugins();
 			bind(PluginDiscovery.class).to(GuicePluginDiscovery.class);
 			for (CRaSHPlugin<?> plugin: plugins) {
-				pluginBinder.addBinding().toInstance(plugin);
-				bind((Class<CRaSHPlugin>)plugin.getClass()).toInstance(plugin);
+				if (!isAuthenticationPlugin(plugin)) {
+					pluginBinder.addBinding().toInstance(plugin);
+					bind((Class<CRaSHPlugin>)plugin.getClass()).toInstance(plugin);
+				}
 			}
+		}
+
+		private boolean isAuthenticationPlugin(CRaSHPlugin<?> plugin) {
+			if (plugin.getType().isAssignableFrom(AuthenticationPlugin.class)) {
+				return true;
+			}
+			if (ImmutableList.copyOf(plugin.getType().getInterfaces()).contains(AuthenticationPlugin.class)) {
+				return true;
+			}
+			return false;
 		}
 	}
 	

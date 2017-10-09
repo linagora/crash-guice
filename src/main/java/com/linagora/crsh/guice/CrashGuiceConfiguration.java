@@ -31,21 +31,16 @@
  * ***** END LICENSE BLOCK ***** */
 package com.linagora.crsh.guice;
 
-import java.util.Collection;
+import java.util.List;
 import java.util.Map.Entry;
 
 import org.crsh.plugin.PropertyDescriptor;
 
-import com.google.common.collect.ArrayListMultimap;
+import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
-import com.google.common.collect.Iterables;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.ImmutableSet;
 
 public class CrashGuiceConfiguration {
-
-
-	private final ImmutableMap<PropertyDescriptor<Object>, Object> configuration;
-
 
 	public static Builder builder() {
 		return new Builder();
@@ -53,45 +48,69 @@ public class CrashGuiceConfiguration {
 	
 	public static class Builder {
 		
-		private Multimap<String, Object> values;
+		private ImmutableMap.Builder<PropertyDescriptor<List>, List> lists;
+		private ImmutableMap.Builder<PropertyDescriptor<Integer>, Integer> integers;
 
 		private Builder() {
-			values = ArrayListMultimap.create();
+			lists = ImmutableMap.builder();
+			integers = ImmutableMap.builder();
 		}
 		
-		public Builder property(String propertyName, Object value) {
-			values.put(propertyName, value);
+		public Builder property(PropertyDescriptor<List> propertyDescriptor, List value) {
+			lists.put(propertyDescriptor, value);
+			return this;
+		}
+		
+		public Builder property(PropertyDescriptor<Integer> propertyDescriptor, Integer value) {
+			integers.put(propertyDescriptor, value);
 			return this;
 		}
 		
 		public CrashGuiceConfiguration build() {
-			ImmutableMap.Builder<PropertyDescriptor<Object>, Object> configuration = ImmutableMap.builder();
-			for (Entry<String, Collection<Object>> entry: values.asMap().entrySet()) {
-				Collection<Object> values = entry.getValue();
-				if (values.size() != 1) {
-					throw new IllegalStateException("Duplicate entry for property : " + entry.getKey());
-				}
-				Object value = Iterables.getOnlyElement(values);
-				configuration.put(new PropertyDescriptor(value.getClass(), entry.getKey(), value, "") {
-					@Override
-					protected Object doParse(String s) throws Exception {
-						return s;
-					}
-				}, value);
-				
-			}
-			return new CrashGuiceConfiguration(configuration.build());
+			return new CrashGuiceConfiguration(lists.build(), integers.build());
 		}
 	}
-	
 
-	public CrashGuiceConfiguration(ImmutableMap<PropertyDescriptor<Object>, Object> configuration) {
-		this.configuration = configuration;
+	private final ImmutableMap<PropertyDescriptor<List>, List> lists;
+	private final ImmutableMap<PropertyDescriptor<Integer>, Integer> integers;
+
+	public CrashGuiceConfiguration(ImmutableMap<PropertyDescriptor<List>, List> lists, 
+			ImmutableMap<PropertyDescriptor<Integer>,Integer> integers) {
+		this.lists = lists;
+		this.integers = integers;
+	}
+	
+	public ImmutableSet<Entry<PropertyDescriptor<List>, List>> listsAsEntries() {
+		return lists.entrySet();
+	}
+	
+	public ImmutableSet<Entry<PropertyDescriptor<Integer>, Integer>> integersAsEntries() {
+		return integers.entrySet();
 	}
 
-	
-	public Iterable<Entry<PropertyDescriptor<Object>, Object>> toEntries() {
-		return configuration.entrySet();
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(lists, integers);
+	}
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof CrashGuiceConfiguration) {
+			CrashGuiceConfiguration other = (CrashGuiceConfiguration) obj;
+			return Objects.equal(this.lists, other.lists)
+				&& Objects.equal(this.integers, other.integers);
+		}
+		return false;
+	}
+
+
+	@Override
+	public String toString() {
+		return Objects.toStringHelper(this)
+				.add("lists", lists)
+				.add("integers", integers)
+				.toString();
 	}
 	
 }

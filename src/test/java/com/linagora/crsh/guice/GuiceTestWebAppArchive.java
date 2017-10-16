@@ -20,12 +20,12 @@ import com.google.inject.servlet.GuiceServletContextListener;
 public class GuiceTestWebAppArchive {
 
 	private static String getCRaSHMavenCoordinate() throws IOException {
-		return "org.crsh:crsh.shell.core:" + getCRaSHVersion();
+		return "org.crashub:crash.shell:" + getCRaSHVersion();
 	}
 	
 	private static String getCRaSHVersion() throws IOException {
 		Properties props = new Properties();
-		InputStream in = CRaSHPlugin.class.getClassLoader().getResourceAsStream("META-INF/maven/org.crsh/crsh.shell.core/pom.properties");
+		InputStream in = CRaSHPlugin.class.getClassLoader().getResourceAsStream("META-INF/maven/org.crashub/crash.shell/pom.properties");
 		props.load(in);
 		return props.getProperty("version");
 	}

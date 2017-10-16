@@ -48,7 +48,7 @@ public class CrashGuiceSupportStartTestCase {
 		out.println("guice print -p counter com.linagora.crsh.guice.SampleService");
 		out.flush();
 		String printPropertyResponse = TelnetHelper.readUntil("% ", in);
-		assertThat(printPropertyResponse).contains("{}");
+		assertThat(printPropertyResponse).contains("%");
 	}
 	
 	@Test

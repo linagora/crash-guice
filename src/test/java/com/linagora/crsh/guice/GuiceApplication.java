@@ -2,13 +2,12 @@ package com.linagora.crsh.guice;
 
 import java.util.Random;
 
+import org.crsh.plugin.PropertyDescriptor;
 
 import com.google.inject.Provides;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import com.google.inject.servlet.ServletModule;
-import com.linagora.crsh.guice.CrashGuiceConfiguration;
-import com.linagora.crsh.guice.CrashGuiceSupport;
 
 public class GuiceApplication extends ServletModule {
 	
@@ -23,7 +22,7 @@ public class GuiceApplication extends ServletModule {
 	
 	@Provides
 	public CrashGuiceConfiguration configuration(@Named("telnet.port") int port) {
-		return CrashGuiceConfiguration.builder().property("telnet.port", port).build();
+		return CrashGuiceConfiguration.builder().property(PropertyDescriptor.create("telnet.port", 5665, "The telnet port"), port).build();
 	}
 	
 }
